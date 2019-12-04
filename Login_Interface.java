@@ -1,4 +1,4 @@
-package advanced_project;
+package Bar_Managment_3;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -9,6 +9,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 public class Login_Interface extends BorderPane {
 
@@ -24,22 +25,27 @@ public class Login_Interface extends BorderPane {
     private Button btEnter;
     private HBox loginHBoxBot;
 
-    public Login_Interface() {
+    private BarManagment_2 stg;
+
+    public Login_Interface(BarManagment_2 stg) {
+        this.stg = stg;
         loginGrid = new GridPane();
         buttons = new Button[size];
         loginTextField = new TextField();
-        loginTextField.setMinSize(200, 100);
-        
-        
+        loginTextField.setMinSize(100, 75);
+        loginTextField.setDisable(true);
+
         loginLbl = new Label("Login");
         loginLbl.setMinSize(100, 100);
         loginVBoxTop = new VBox(10);
-        
+
         btClear = new Button("Clear");
         btClearAll = new Button("Clear All");
         btEnter = new Button("Enter");
         loginHBoxBot = new HBox(10);
-        
+
+        btEnter.setOnAction(e -> stg.setNextScene());
+
         btClear.setMinSize(150, 100);
         btClearAll.setMinSize(150, 100);
         btEnter.setMinSize(150, 100);
@@ -54,24 +60,37 @@ public class Login_Interface extends BorderPane {
         loginVBoxTop.setAlignment(Pos.CENTER);
         this.setTop(loginVBoxTop);
 
-        while (counter < 9) {
-            for (int i = 0; i < 3; i++) {
-                for (int j = 0; j < 3; j++) {
-                    Button bt = new Button(String.valueOf(counter + 1));
-                    bt.setMinSize(100,100);
-                    loginGrid.add(bt, j, i);
-                    counter++;
-                }
-            }
+//        while (counter < 9) {
+//            for (int i = 0; i < 3; i++) {
+//                for (int j = 0; j < 3; j++) {
+//                    Button bt = new Button(String.valueOf((counter + 1));
+//                    bt.setMinSize(100,100);
+//                    loginGrid.add(bt, j, i);
+//                    counter++;
+//                }
+//            }
+//        }
+        int r, c;
+        for (int n = 1; n <= 9; n++) {
+            r = (n - 1) / 3;
+            c = n - (3 * r) - 1;
+            Button bt = new Button(n + "");
+            bt.setMinSize(100, 100);
+//          bt.setOnAction(e-> {loginTextField.setText(loginTextField.getText() + bt.getText());});
+            bt.setOnAction(e -> {
+                loginTextField.appendText(bt.getText());
+            });
+
+            loginGrid.add(bt, c, r);
         }
-        
+
         this.setBottom(loginHBoxBot);
         this.setCenter(loginGrid);
         loginGrid.setAlignment(Pos.CENTER);
         loginHBoxBot.getChildren().addAll(btClear, btClearAll, btEnter);
         loginHBoxBot.setAlignment(Pos.CENTER);
-        
-        this.setPadding(new Insets(10,10,10,10));
+
+        this.setPadding(new Insets(10, 10, 10, 10));
         this.setStyle("-fx-border-color : black;");
     }
 
