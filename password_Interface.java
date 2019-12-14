@@ -7,65 +7,66 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.PasswordField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import static javafx.scene.layout.Region.USE_PREF_SIZE;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
-public class Login_Interface extends BorderPane {
+public class password_Interface extends BorderPane {
 
-    private GridPane loginGrid;
+    private GridPane passwordGrid;
     private Button[] buttons;
     private final int size = 10;
-    private TextField loginTextField;
-    private Label loginLbl;
-    private VBox loginVBoxTop;
+    private PasswordField passwordField;
+    private Label passwordLbl;
+    private VBox passwordVBoxTop;
     int counter = 0;
     private Button btClear;
     private Button btClearAll;
     private Button btEnter;
-    private HBox loginHBoxBot;
+    private HBox passwordHBoxBot;
     private int row, column;
-    private HBox loginHboxTop;
+    private HBox passwordHboxTop;
     private BarManagment_2 stg;
 
-    public Login_Interface(BarManagment_2 stg) {
+    public password_Interface(BarManagment_2 stg) {
         this.stg = stg;
-        loginGrid = new GridPane();
+        passwordGrid = new GridPane();
         buttons = new Button[size];
-        loginHboxTop = new HBox(10);
-        loginTextField = new TextField();
-        loginTextField.setDisable(false);
-        loginTextField.setFont(Font.font(40));
-        loginTextField.setMinSize(300, 40);
-        loginTextField.setStyle("-fx-font-weight:BOLD;");
-        loginTextField.requestFocus();
-        loginHboxTop.setMaxWidth(470);
-        loginHboxTop.setMinWidth(470);
-        loginHboxTop.setMinHeight(40);
-        loginHboxTop.setAlignment(Pos.CENTER);
-        loginGrid.setScaleX(1.45);
-        loginGrid.setMinWidth(465);
-        loginGrid.setMaxWidth(465);
+        passwordHboxTop = new HBox(10);
+        passwordField = new PasswordField();
+        passwordField.requestFocus();
+        passwordField.setDisable(false);
+        passwordField.setFont(Font.font(40));
+        passwordField.setMinSize(300, 40);
+        passwordField.setStyle("-fx-font-weight:BOLD;");
+        passwordHboxTop.setMaxWidth(470);
+        passwordHboxTop.setMinWidth(470);
+        passwordHboxTop.setMinHeight(40);
+        passwordHboxTop.setAlignment(Pos.CENTER);
+        passwordGrid.setScaleX(1.45);
+        passwordGrid.setMinWidth(465);
+        passwordGrid.setMaxWidth(465);
         this.setStyle("-fx-background-color:#D3D3D3");
-        loginLbl = new Label("Your ID");
-        loginLbl.setStyle("-fx-background-color:#F9D342;-fx-font-size:30;-fx-font-weight:BOLD;");
-        loginLbl.setAlignment(Pos.CENTER);
-        loginLbl.setMinSize(120, 85);
-        loginTextField.setStyle("-fx-background-color:#F9D342;-fx-font-color:#292826");
-        loginVBoxTop = new VBox(10);
+        passwordLbl = new Label("Password");
+        passwordLbl.setStyle("-fx-background-color:#F9D342;-fx-font-size:25;-fx-font-weight:BOLD;");
+        passwordLbl.setAlignment(Pos.CENTER);
+        passwordLbl.setMinSize(120, 85);
+        passwordField.setStyle("-fx-background-color:#F9D342;-fx-font-color:#292826");
+        passwordVBoxTop = new VBox(10);
         btClear = new Button("CLEAR");
         btClearAll = new Button("CLEAR ALL");
         btEnter = new Button("ENTER");
-        loginHBoxBot = new HBox(10);
-        loginHboxTop.setStyle("-fx-border-width: 4;-fx-border-color:#292826");
-        loginHboxTop.setPadding(new Insets(10, 5, 10, 15));
+        passwordHBoxBot = new HBox(10);
+        passwordHboxTop.setStyle("-fx-border-width: 4;-fx-border-color:#292826");
+        passwordHboxTop.setPadding(new Insets(10, 5, 10, 15));
         btEnter.setOnAction((e) -> {
-            if (checkID()) {
-                stg.setPasswordScene();
+            if (this.checkPassword()) {
+                stg.setTablesNumpadScene();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Dialog");
@@ -74,10 +75,9 @@ public class Login_Interface extends BorderPane {
                 alert.showAndWait();
             }
         });
-
-        this.loginTextField.setOnAction(e -> {
-            if (checkID()) {
-                stg.setPasswordScene();
+        this.passwordField.setOnAction(e -> {
+            if (this.checkPassword()) {
+                stg.setTablesNumpadScene();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Error Dialog");
@@ -86,35 +86,34 @@ public class Login_Interface extends BorderPane {
                 alert.showAndWait();
             }
         });
-        loginTextField.lengthProperty().addListener(new ChangeListener<Number>() {
+        passwordField.lengthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 if (newValue.intValue() > oldValue.intValue()) {
-                    char ch = loginTextField.getText().charAt(oldValue.intValue());
+                    char ch = passwordField.getText().charAt(oldValue.intValue());
                     // Check if the new character is the number or other's
                     if (!(ch >= '0' && ch <= '9')) {
                         // if it's not number then just setText to previous one
-                        if (loginTextField.getLength() > 0) {
-                            loginTextField.setText(loginTextField.getText(0, loginTextField.getLength() - 1));
+                        if (passwordField.getLength() > 0) {
+                            passwordField.setText(passwordField.getText(0, passwordField.getLength() - 1));
                         }
 
                     }
                 }
             }
         });
-        btClear.setMinSize(150, 100);
+//        btClear.setMinSize(150, 100);
         btClearAll.setMinSize(150, 100);
         btEnter.setMinSize(460, 90);
         btEnter.setStyle("-fx-Color:#292826;-fx-font-size:48;-fx-font-weight:BOLD");
-        loginVBoxTop.getChildren().addAll(loginLbl, loginTextField);
-        loginVBoxTop.setAlignment(Pos.CENTER);
-
+        passwordVBoxTop.getChildren().addAll(passwordLbl, passwordField);
+        passwordVBoxTop.setAlignment(Pos.CENTER);
 //        while (counter < 9) {
 //            for (int i = 0; i < 3; i++) {
 //                for (int j = 0; j < 3; j++) {
 //                    Button bt = new Button(String.valueOf((counter + 1));
 //                    bt.setMinSize(100,100);
-//                    loginGrid.add(bt, j, i);
+//                    passwordGrid.add(bt, j, i);
 //                    counter++;
 //                }
 //            }
@@ -125,16 +124,16 @@ public class Login_Interface extends BorderPane {
             Button bt = new Button(n + "");
             bt.setMinSize(100, 100);
             bt.setStyle("-fx-Color:#F9D342;-fx-font-size:28;-fx-font-weight:BOLD");
-//          bt.setOnAction(e-> {loginTextField.setText(loginTextField.getText() + bt.getText());});
+//          bt.setOnAction(e-> {passwordField.setText(passwordField.getText() + bt.getText());});
             bt.setOnAction(e -> {
-                loginTextField.appendText(bt.getText());
+                passwordField.appendText(bt.getText());
             });
             if (n == 10) {
                 bt.setText("CLEAR");
                 bt.setStyle("-fx-Color:#292826;-fx-font-size:20;-fx-font-weight:BOLD");
                 bt.setOnAction(e -> {
-                    if (loginTextField.getLength() > 0) {
-                        loginTextField.setText(loginTextField.getText(0, loginTextField.getLength() - 1));
+                    if (passwordField.getLength() > 0) {
+                        passwordField.setText(passwordField.getText(0, passwordField.getLength() - 1));
                     } else {
                         return;
                     }
@@ -152,32 +151,31 @@ public class Login_Interface extends BorderPane {
                 bt.setPrefSize(USE_PREF_SIZE, USE_PREF_SIZE);
                 bt.setTextAlignment(TextAlignment.CENTER);
                 bt.setOnAction(e -> {
-                    loginTextField.clear();
+                    passwordField.clear();
                 });
             }
-            loginGrid.setVgap(10);
-            loginGrid.setHgap(10);
-            loginGrid.add(bt, column, row);
+            passwordGrid.setVgap(10);
+            passwordGrid.setHgap(10);
+            passwordGrid.add(bt, column, row);
         }
-        loginHboxTop.getChildren().addAll(loginLbl, loginTextField);
-        this.setBottom(loginHBoxBot);
-        this.setCenter(loginGrid);
-        this.setTop(loginHboxTop);
+        passwordHboxTop.getChildren().addAll(passwordLbl, passwordField);
+        this.setBottom(passwordHBoxBot);
+        this.setCenter(passwordGrid);
+        this.setTop(passwordHboxTop);
         this.setPadding(new Insets(10, 10, 10, 10));
         this.setStyle("-fx-border-color : black;");
-
-        loginGrid.setAlignment(Pos.CENTER);
-        loginHBoxBot.getChildren().add(btEnter);
-        loginHBoxBot.setAlignment(Pos.CENTER);
+        passwordGrid.setAlignment(Pos.CENTER);
+        passwordHBoxBot.getChildren().add(btEnter);
+        passwordHBoxBot.setAlignment(Pos.CENTER);
     }
 
-    public boolean checkID() {
-        String u1 = "123";
-        return (loginTextField.getText().equals(u1));
+    public boolean checkPassword() {
+        String p = "123";
+        return (passwordField.getText().equals(p));
     }
 
     public GridPane getLoginGrid() {
-        return loginGrid;
+        return passwordGrid;
     }
 
     public int getRow() {
@@ -193,7 +191,7 @@ public class Login_Interface extends BorderPane {
     }
 
     public VBox getLoginHBoxTop() {
-        return loginVBoxTop;
+        return passwordVBoxTop;
     }
 
     public int getCounter() {
@@ -213,27 +211,22 @@ public class Login_Interface extends BorderPane {
     }
 
     public HBox getLoginHBoxBot() {
-        return loginHBoxBot;
+        return passwordHBoxBot;
     }
 
     public int getSize() {
         return size;
     }
 
-    public TextField getLoginTextField() {
-        return loginTextField;
+    public PasswordField getPasswordField() {
+        return passwordField;
     }
 
     public Label getLoginLbl() {
-        return loginLbl;
+        return passwordLbl;
     }
 
     public VBox getLoginHBox() {
-        return loginVBoxTop;
+        return passwordVBoxTop;
     }
-
-    public String getLoginTextFieldData() {
-        return this.getLoginTextFieldData();
-    }
-
 }
