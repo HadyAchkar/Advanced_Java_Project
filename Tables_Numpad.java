@@ -1,4 +1,4 @@
-package Bar_Managment1_3;
+package barmanagment;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
