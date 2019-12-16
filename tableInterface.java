@@ -1,55 +1,92 @@
-package Bar_Managment1_3;
+package barmanagment;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 public class tableInterface extends BorderPane {
 
-    private GridPane invoiceGrid;
     private VBox vboxCategoriesRight;
     private Button[] categoryBtns;
     private FlowPane flowPaneWhiskey;
     private FlowPane flowPaneVodka;
     private FlowPane flowPaneCocktail;
     private FlowPane flowPaneSoftDrink;
-    private Button[] itemBtns;
-    private int row, column;
     private Button[] softDrinkBtns;
     private Button[] whiskeyBtns;
     private Button[] vodkaBtns;
     private Button[] cocktailBtns;
     private FlowPane itemsPane;
     private BarManagment_2 stg;
-    private TableView tableView;
+    private TableView<Product> tableView;
+    private ObservableList<Product> data;
+    int counter = 1;
 
     public tableInterface(BarManagment_2 stg) {
+
+        this.variableConstruction();
+
+        this.paneLayouts();
+
+        this.buttonLayouts();
+
+        this.categorySetOnAction();
+
+        this.addTable();
+
+        this.drinkSetOnAction();
+
+        this.setRight(vboxCategoriesRight);
+
+        this.setLeft(tableView);
+
+        this.setCenter(itemsPane);
+
+    }
+
+    private void addTable() {
+        TableColumn<Product, String> quantityCol = new TableColumn("Quantity");
+        TableColumn<Product, String> itemNameCol = new TableColumn("Item Name");
+        TableColumn<Product, Double> itemPriceCol = new TableColumn("Price");
+        quantityCol.setCellValueFactory(new PropertyValueFactory("quantity"));
+        itemNameCol.setCellValueFactory(new PropertyValueFactory("name"));
+        itemPriceCol.setCellValueFactory(new PropertyValueFactory("price"));
+
+        tableView.setItems(data);
+        tableView.getColumns().addAll(quantityCol, itemNameCol, itemPriceCol);
+
+    }
+
+    private void variableConstruction() {
         this.stg = stg;
-//        invoiceGrid = new GridPane();
+        data = FXCollections.observableArrayList();
+
         tableView = new TableView();
-
         vboxCategoriesRight = new VBox(10);
-        categoryBtns = new Button[4];
-        flowPaneSoftDrink = new FlowPane();
 
+        itemsPane = new FlowPane();
+        flowPaneSoftDrink = new FlowPane();
         flowPaneVodka = new FlowPane();
         flowPaneCocktail = new FlowPane();
+        flowPaneWhiskey = new FlowPane();
+        categoryBtns = new Button[4];
         softDrinkBtns = new Button[4];
         whiskeyBtns = new Button[4];
-//        flowPaneVodka.setMaxSize(500,500);
-//        flowPaneWhiskey.setMaxSize(500, 500);
-//        flowPaneCocktail.setMaxSize(500, 500);
-        flowPaneWhiskey = new FlowPane();
         vodkaBtns = new Button[4];
         cocktailBtns = new Button[4];
+
+        categoryBtns[0] = new Button("Soft Drink");
+        categoryBtns[1] = new Button("Whiskey");
+        categoryBtns[2] = new Button("Vodka");
+        categoryBtns[3] = new Button("Cocktail");
+
         softDrinkBtns[0] = new Button("Pepsi");
         softDrinkBtns[1] = new Button("7-UP");
         softDrinkBtns[2] = new Button("Sprite");
@@ -59,31 +96,23 @@ public class tableInterface extends BorderPane {
         whiskeyBtns[1] = new Button("Black Label");
         whiskeyBtns[2] = new Button("J&D");
         whiskeyBtns[3] = new Button("Crown Royal Canadian");
+
         vodkaBtns[0] = new Button("Absolut");
         vodkaBtns[1] = new Button("Smirnoff");
         vodkaBtns[2] = new Button("Grey Goose");
         vodkaBtns[3] = new Button("Stolichnaya");
+
         cocktailBtns[0] = new Button("Old Fashioned");
         cocktailBtns[1] = new Button("Negroni");
         cocktailBtns[2] = new Button("Whiskey Sour");
         cocktailBtns[3] = new Button("Daiquiri");
 
-        softDrinkBtns[0].setOnAction(e -> {
-            tableView.getItems().add(new tableViewFields(1, "Pepsi"));
-            tableView.getItems().add(new tableViewFields(1, "7-UP"));
-        });
+    }
 
-        itemsPane = new FlowPane();
+    private void paneLayouts() {
+
         itemsPane.setHgap(10);
         itemsPane.setVgap(10);
-
-        categoryBtns[0] = new Button("Soft Drink");
-        categoryBtns[1] = new Button("Whiskey");
-        categoryBtns[2] = new Button("Vodka");
-        categoryBtns[3] = new Button("Cocktail");
-
-        vboxCategoriesRight.getChildren().addAll(categoryBtns);
-
         flowPaneWhiskey.getChildren().addAll(whiskeyBtns);
         flowPaneWhiskey.setHgap(10);
         flowPaneWhiskey.setVgap(10);
@@ -98,12 +127,35 @@ public class tableInterface extends BorderPane {
         flowPaneSoftDrink.setVgap(10);
         itemsPane.setMaxSize(20, 20);
         itemsPane.setAlignment(Pos.TOP_CENTER);
+        vboxCategoriesRight.getChildren().addAll(categoryBtns);
 
+    }
+
+    private void buttonLayouts() {
+        for (Button categoryBtn : categoryBtns) {
+            categoryBtn.setMinSize(80, 80);
+        }
+        for (Button whiskeyBtn : whiskeyBtns) {
+            whiskeyBtn.setMinSize(80, 80);
+        }
+        for (Button vodkaBtn : vodkaBtns) {
+            vodkaBtn.setMinSize(80, 80);
+        }
+        for (Button cocktailBtn : cocktailBtns) {
+            cocktailBtn.setMinSize(80, 80);
+        }
+        for (Button softDrinkBtn : softDrinkBtns) {
+            softDrinkBtn.setMinSize(80, 80);
+        }
+    }
+
+    private void categorySetOnAction() {
         categoryBtns[0].setOnAction(e -> {
             itemsPane.getChildren().removeAll();
             itemsPane.getChildren().add(flowPaneSoftDrink);
 
         });
+
         categoryBtns[1].setOnAction(e -> {
             itemsPane.getChildren().removeAll();
             itemsPane.getChildren().add(flowPaneWhiskey);
@@ -118,58 +170,42 @@ public class tableInterface extends BorderPane {
             itemsPane.getChildren().add(flowPaneCocktail);
 
         });
-//        for (int i = 0; i < categoryBtns.length; i++) {
-//            if (i == 0) 
-//                categoryBtns[0].setOnAction(e -> {
-//                    itemsPane.getChildren().removeAll();
-//                    itemsPane.getChildren().add(flowPaneSoftDrink);
-//                });
-//             else if (i == 1) 
-//                categoryBtns[1].setOnAction(e -> {
-//                    itemsPane.getChildren().removeAll();
-//                    itemsPane.getChildren().add(flowPaneWhiskey);
-//                });
-//             else if (i == 2) 
-//                categoryBtns[2].setOnAction(e -> {
-//                    itemsPane.getChildren().removeAll();
-//                    itemsPane.getChildren().add(flowPaneVodka);
-//                });
-//           
-//            else
-//                categoryBtns[3].setOnAction(e -> {
-//                    itemsPane.getChildren().removeAll();
-//                    itemsPane.getChildren().add(flowPaneCocktail);
-//
-//                });
-//            
-//        }
 
-        this.addTable();
-        this.setRight(vboxCategoriesRight);
-        this.setLeft(tableView);
-        this.setCenter(itemsPane);
-        for (int i = 0; i < categoryBtns.length; i++) {
-            categoryBtns[i].setMinSize(80, 80);
+    }
+
+    private void drinkSetOnAction() {
+
+        for (Button softDrinkBtn : softDrinkBtns) {
+            softDrinkBtn.setOnAction(e -> {
+
+                data.add(new Product(1, softDrinkBtn.getText(), 0));
+
+            });
         }
-        for (int i = 0; i < whiskeyBtns.length; i++) {
-            whiskeyBtns[i].setMinSize(80, 80);
+        for (Button whiskeyBtn : whiskeyBtns) {
+            whiskeyBtn.setOnAction(e -> {
+                data.add(new Product(1, whiskeyBtn.getText(), 0));
+            });
         }
-        for (int i = 0; i < vodkaBtns.length; i++) {
-            vodkaBtns[i].setMinSize(80, 80);
+        for (Button vodkabtn : vodkaBtns) {
+            vodkabtn.setOnAction(e -> {
+                data.add(new Product(1, vodkabtn.getText(), 0));
+            });
         }
+
         for (int i = 0; i < cocktailBtns.length; i++) {
-            cocktailBtns[i].setMinSize(80, 80);
+            cocktailBtns[i].setOnAction(e -> {
+
+                for (int j = 0; j < data.size(); j++) {
+                    if (data.get(j).equals(cocktailBtns[i])) {
+                        data.set(j, new Product(counter++, cocktailBtns[i].getText(), 0));
+                    }
+                    else data.add(new Product(1, "whatever", 0));
+                }
+
+            });
+
         }
-        for (int i = 0; i < softDrinkBtns.length; i++) {
-            softDrinkBtns[i].setMinSize(80, 80);
-        }
-    }
-
-    private void addTable() {
-        TableColumn Qty = new TableColumn();
-
-        TableColumn itemName = new TableColumn();
 
     }
-
 }

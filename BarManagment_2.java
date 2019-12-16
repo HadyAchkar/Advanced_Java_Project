@@ -1,4 +1,4 @@
-package Bar_Managment1_3;
+package barmanagment;
 
 import java.io.FileNotFoundException;
 import javafx.application.Application;
