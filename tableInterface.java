@@ -1,4 +1,4 @@
-package barmanagment;
+package testing;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -151,22 +151,22 @@ public class tableInterface extends BorderPane {
 
     private void categorySetOnAction() {
         categoryBtns[0].setOnAction(e -> {
-            itemsPane.getChildren().removeAll();
+            itemsPane.getChildren().clear();
             itemsPane.getChildren().add(flowPaneSoftDrink);
 
         });
 
         categoryBtns[1].setOnAction(e -> {
-            itemsPane.getChildren().removeAll();
+            itemsPane.getChildren().clear();
             itemsPane.getChildren().add(flowPaneWhiskey);
         });
         categoryBtns[2].setOnAction(e -> {
-            itemsPane.getChildren().removeAll();
+            itemsPane.getChildren().clear();
             itemsPane.getChildren().add(flowPaneVodka);
 
         });
         categoryBtns[3].setOnAction(e -> {
-            itemsPane.getChildren().removeAll();
+            itemsPane.getChildren().clear();
             itemsPane.getChildren().add(flowPaneCocktail);
 
         });
@@ -192,20 +192,28 @@ public class tableInterface extends BorderPane {
                 data.add(new Product(1, vodkabtn.getText(), 0));
             });
         }
-
-        for (int i = 0; i < cocktailBtns.length; i++) {
-            cocktailBtns[i].setOnAction(e -> {
-
-                for (int j = 0; j < data.size(); j++) {
-                    if (data.get(j).equals(cocktailBtns[i])) {
-                        data.set(j, new Product(counter++, cocktailBtns[i].getText(), 0));
-                    }
-                    else data.add(new Product(1, "whatever", 0));
-                }
-
+        for (Button cocktailBtn : cocktailBtns) {
+            cocktailBtn.setOnAction(e -> {
+                //data.add(new Product(1, cocktailBtn.getText(), 0));
+                AddProduct(new Product(1, cocktailBtn.getText(), 0));
             });
-
         }
 
+    }
+    private void AddProduct (Product p){
+        int sz = data.size();
+        for (int i = 0; i < sz; i++) {
+            if (data.get(i).getName().equals(p.getName())){
+                p.quantity++;
+                
+    //God bless you K-GOD :) :)
+                break;
+                // i = sz;
+            }
+            else
+                 data.add(p);
+        }
+        
+        
     }
 }

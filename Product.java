@@ -1,4 +1,4 @@
-package barmanagment;
+package testing;
 
 public class Product {
 

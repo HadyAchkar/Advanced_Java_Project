@@ -1,0 +1,26 @@
+.root{
+    -fx-background-color: #0B0C10;
+    -fx-font-size: 12pt;
+    -fx-font-family: "Courier New";
+}
+.button{
+    
+    -fx-padding: 10;
+    -fx-background-color: #c5c6c7;
+    -fx-text-fill:#1f2833 ;
+}
+.label{
+    
+    -fx-background-color:#c5c6c7;
+    -fx-font-size:30;
+    -fx-font-weight:BOLD;
+}
+/*#45a29e*/
+.button-custom{ 
+    /* enter, clear, clearALL*/
+    -fx-padding: 6;
+    -fx-background-color: #45a29e;
+    -fx-text-fill:#1f2833 ;
+    -fx-font-size:48;
+    -fx-font-weight: BOLD;
+}

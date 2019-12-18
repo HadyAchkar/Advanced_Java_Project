@@ -1,4 +1,4 @@
-package barmanagment;
+package testing;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -7,6 +7,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollBar;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -16,7 +17,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 
 public class Login_Interface extends BorderPane {
-
+    ScrollBar sb = new ScrollBar();
     private GridPane loginGrid;
     private Button[] buttons;
     private final int size = 10;
@@ -46,23 +47,23 @@ public class Login_Interface extends BorderPane {
         loginHboxTop.setMaxWidth(470);
         loginHboxTop.setMinWidth(470);
         loginHboxTop.setMinHeight(40);
-        loginHboxTop.setAlignment(Pos.CENTER);
+        loginHboxTop.setAlignment(Pos.TOP_CENTER);
         loginGrid.setScaleX(1.45);
         loginGrid.setMinWidth(465);
         loginGrid.setMaxWidth(465);
         this.setStyle("-fx-background-color:#D3D3D3");
-        loginLbl = new Label("Your ID");
-        loginLbl.setStyle("-fx-background-color:#F9D342;-fx-font-size:30;-fx-font-weight:BOLD;");
+        loginLbl = new Label("ID");
+//        loginLbl.setStyle("-fx-background-color:#F9D342;-fx-font-size:30;-fx-font-weight:BOLD;");
         loginLbl.setAlignment(Pos.CENTER);
         loginLbl.setMinSize(120, 85);
-        loginTextField.setStyle("-fx-background-color:#F9D342;-fx-font-color:#292826");
+//        loginTextField.setStyle("-fx-background-color:#F9D342;-fx-font-color:#292826");
         loginVBoxTop = new VBox(10);
         btClear = new Button("CLEAR");
         btClearAll = new Button("CLEAR ALL");
         btEnter = new Button("ENTER");
         loginHBoxBot = new HBox(10);
         loginHboxTop.setStyle("-fx-border-width: 4;-fx-border-color:#292826");
-        loginHboxTop.setPadding(new Insets(10, 5, 10, 15));
+//        loginHboxTop.setPadding(new Insets(10, 5, 10, 15));
         btEnter.setOnAction((e) -> {
             if (checkID()) {
                 stg.setPasswordScene();
@@ -105,7 +106,7 @@ public class Login_Interface extends BorderPane {
         btClear.setMinSize(150, 100);
         btClearAll.setMinSize(150, 100);
         btEnter.setMinSize(460, 90);
-        btEnter.setStyle("-fx-Color:#292826;-fx-font-size:48;-fx-font-weight:BOLD");
+        btEnter.getStyleClass().add("button-custom");
         loginVBoxTop.getChildren().addAll(loginLbl, loginTextField);
         loginVBoxTop.setAlignment(Pos.CENTER);
 
@@ -131,7 +132,7 @@ public class Login_Interface extends BorderPane {
             });
             if (n == 10) {
                 bt.setText("CLEAR");
-                bt.setStyle("-fx-Color:#292826;-fx-font-size:20;-fx-font-weight:BOLD");
+                bt.getStyleClass().add("button-custom");
                 bt.setOnAction(e -> {
                     if (loginTextField.getLength() > 0) {
                         loginTextField.setText(loginTextField.getText(0, loginTextField.getLength() - 1));
@@ -142,12 +143,12 @@ public class Login_Interface extends BorderPane {
             }
             if (n == 11) {
                 bt.setText("0");
-                bt.setStyle("-fx-Color:#F9D342;-fx-font-size:28;-fx-font-weight:BOLD");
+//                bt.getStyleClass().add("button-custom");
 
             }
             if (n == 12) {
                 bt.setText("CLEAR ALL");
-                bt.setStyle("-fx-Color:#292826;-fx-font-size:20;-fx-font-weight:BOLD");
+                bt.getStyleClass().add("button-custom");
                 bt.setWrapText(true);
                 bt.setPrefSize(USE_PREF_SIZE, USE_PREF_SIZE);
                 bt.setTextAlignment(TextAlignment.CENTER);
@@ -172,6 +173,8 @@ public class Login_Interface extends BorderPane {
     }
 
     public boolean checkID() {
+        
+        
         String u1 = "123";
         return (loginTextField.getText().equals(u1));
     }
